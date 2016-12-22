@@ -3,6 +3,25 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+jar {
+    archiveName = "FloatingWatch.jar"
+
+    from {
+        configurations.runtime.collect {
+            it.isDirectory() ? it: zipTree(it)
+        }
+
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+
+    manifest {
+        attributes 'Main-Class': 'info.mhylle.utilities.floatingwatch.FloatingWatch'
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
+
 sourceCompatibility = 1.8
 
 repositories {
